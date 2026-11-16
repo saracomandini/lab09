@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"it.unibo.mvc","c":"BadIOGUI","l":"BadIOGUI()","u":"%3Cinit%3E()","k":"3"},{"p":"it.unibo.mvc","c":"BadIOGUI","l":"main()","k":"6"}];updateSearchResults();

@@ -1,0 +1,8 @@
+-classpath '/Users/saracomandini/laboop_git/lab09/91-bad-gui-io/build/classes/java/main:/Users/saracomandini/laboop_git/lab09/91-bad-gui-io/build/resources/main'
+-quiet 
+-d '/Users/saracomandini/laboop_git/lab09/91-bad-gui-io/build/docs/javadoc'
+-windowtitle '91-bad-gui-io API'
+-doctitle '91-bad-gui-io API'
+-notimestamp 
+-Xwerror '-quiet'
+'/Users/saracomandini/laboop_git/lab09/91-bad-gui-io/src/main/java/it/unibo/mvc/BadIOGUI.java'

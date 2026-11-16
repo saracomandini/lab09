@@ -5,6 +5,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static javax.swing.BoxLayout.LINE_AXIS;
+import static javax.swing.JOptionPane.ERROR_MESSAGE;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -13,7 +18,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Random;
@@ -46,6 +50,14 @@ public class BadIOGUI {
         canvas.add(write, BorderLayout.CENTER);
         frame.setContentPane(canvas);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //ex 01.01
+        final JPanel center = new JPanel();
+        center.setLayout(new BoxLayout(center, LINE_AXIS));
+        frame.setContentPane(center);
+        center.add(write, BorderLayout.CENTER);
+        //ex 01.02
+        final JButton read = new JButton();
+        center.add(read);
         /*
          * Handlers
          */
@@ -60,10 +72,33 @@ public class BadIOGUI {
                      * operation. I/O operations may take a long time, during which
                      * your UI becomes completely unresponsive.
                      */
-                    try (PrintStream ps = new PrintStream(PATH, StandardCharsets.UTF_8)) {
+                    try (PrintStream ps = new PrintStream(PATH, UTF_8)) {
                         ps.print(randomGenerator.nextInt());
                     } catch (final IOException e) {
-                        JOptionPane.showMessageDialog(frame, e, "Error", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(frame, e, "Error", ERROR_MESSAGE);
+                        e.printStackTrace(); // NOPMD: allowed as this is just an exercise
+                    }
+                }
+            }
+        );
+        //ex 01.02
+        read.addActionListener(
+            new ActionListener() {
+                @Override
+                public void actionPerformed(final ActionEvent ignored) {
+                    /*
+                     * This would be VERY BAD in a real application.
+                     *
+                     * This makes the Event Dispatch Thread (EDT) work on an I/O
+                     * operation. I/O operations may take a long time, during which
+                     * your UI becomes completely unresponsive.
+                     */
+                    try {
+                        for (final String line: Files.readAllLines(new File(PATH).toPath(), UTF_8)) {
+                            IO.println(line);
+                        }
+                    } catch (final IOException e) {
+                        JOptionPane.showMessageDialog(frame, e, "Error", ERROR_MESSAGE);
                         e.printStackTrace(); // NOPMD: allowed as this is just an exercise
                     }
                 }
@@ -93,6 +128,8 @@ public class BadIOGUI {
         /*
          * OK, ready to push the frame onscreen
          */
+        // resize the frame to the minimum size prior
+        frame.pack();
         frame.setVisible(true);
     }
 
